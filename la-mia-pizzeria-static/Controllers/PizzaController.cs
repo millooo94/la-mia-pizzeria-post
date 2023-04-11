@@ -1,14 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using la_mia_pizzeria_static.Models;
+using Microsoft.Extensions.Hosting;
 
 namespace la_mia_pizzeria_static.Controllers
 {
     public class PizzaController : Controller
     {
-        public IActionResult Index()
+		private readonly ILogger<PizzaController> _logger;
+		private readonly PizzaContext _context;
+
+		public PizzaController(ILogger<PizzaController> logger, PizzaContext context)
+		{
+			_logger = logger;
+			_context = context;
+		}
+
+		public IActionResult Index()
         {
-            using var ctx = new PizzaContext();
-            var pizzas = ctx.Pizzas.ToArray();
+            var pizzas = _context.Pizzas.ToArray();
 
             return View(pizzas);
 
@@ -19,8 +28,7 @@ namespace la_mia_pizzeria_static.Controllers
         }
         public IActionResult Detail(int id)
         {
-            using var ctx = new PizzaContext();
-            var pizza = ctx.Pizzas.SingleOrDefault(p => p.Id == id);
+            var pizza = _context.Pizzas.SingleOrDefault(p => p.Id == id);
 
             if (pizza is null)
             {
@@ -41,28 +49,19 @@ namespace la_mia_pizzeria_static.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Pizza data)
+        public IActionResult Create(Pizza pizza)
         {
             if (!ModelState.IsValid)
             {
-                return View("Create", data);
+                return View(pizza);
             }
 
-            using (PizzaContext ctx = new PizzaContext())
-            {
-                Pizza pizzaToCreate = new Pizza();
-                pizzaToCreate.Name = data.Name;
-                pizzaToCreate.Description = data.Description;
-                pizzaToCreate.Price = data.Price;
-                pizzaToCreate.Img = data.Img;
+			_context.Pizzas.Add(pizza);
+			_context.SaveChanges();
 
-                ctx.Pizzas.Add(pizzaToCreate);
-                ctx.SaveChanges();
-
-                return RedirectToAction("Index");
-            }
+			return RedirectToAction("Index");
+            
         }
         
     }
-    
 }

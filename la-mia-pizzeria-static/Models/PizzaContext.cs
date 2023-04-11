@@ -5,12 +5,8 @@ namespace la_mia_pizzeria_static.Models
 {
     public class PizzaContext : DbContext
     {
-        public DbSet<Pizza> Pizzas { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=PizzasDb;Integrated Security=True; Encrypt=False") ;
-        }
+		public PizzaContext(DbContextOptions<PizzaContext> options) : base(options) { }
+		public DbSet<Pizza> Pizzas { get; set; }
 
         public void Seed()
         {

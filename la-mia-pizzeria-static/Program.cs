@@ -1,14 +1,10 @@
 using la_mia_pizzeria_static.Models;
 
-using (var ctx = new PizzaContext())
-{
-    ctx.Seed();
-}
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddSqlServer<PizzaContext>("Data Source=localhost;Initial Catalog=PizzasDb;Integrated Security=True; Encrypt=False");
 
 var app = builder.Build();
 
@@ -31,5 +27,11 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Pizza}/{action=Index}/{id?}");
 
+
+using (var scope = app.Services.CreateScope())
+using (var ctx = scope.ServiceProvider.GetService<PizzaContext>())
+{
+	ctx!.Seed();
+}
 
 app.Run();

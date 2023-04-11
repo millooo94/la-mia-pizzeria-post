@@ -12,7 +12,7 @@ namespace la_mia_pizzeria_static.Models
 		[AtLeastFiveWords]
 		public string Description { get; set; } = string.Empty;
 		[Required(ErrorMessage = "Please provide a price.")]
-		[Range(1, int.MaxValue, ErrorMessage = "Il prezzo deve essere maggiore di 0")]
+		[Range(1, int.MaxValue, ErrorMessage = "Price must be greater than 0")]
 		public float Price { get; set; }
 		[Required(ErrorMessage = "Please provide an image.")]
 

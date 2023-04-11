@@ -4,30 +4,38 @@
 	var pizza = Model;
 }
 
-<div class="container">
+<div class="my-container">
 	<form method="post" asp-controller="Pizza" asp-action="Create">
 		@Html.AntiForgeryToken()
 		<div class="mb-3">
-			<label asp-for="Name" class="form-label">Name</label>
+			<label asp-for="Name" class="form-label fw-bold">Name</label>
 			<input type="text" asp-for="Name" class="form-control">
-			<span asp-validation-for="Name" class="text error"></span>
-		</div>
-		<div class="mb-3">
-			<label asp-for="Description" class="form-label">Description</label>
-			<div>
-				<textarea asp-for="Description"></textarea>
-				<span asp-validation-for="Description" class="text error"></span>
+			<div class="error">
+				<span asp-validation-for="Name" class="text error"></span>
 			</div>
 		</div>
 		<div class="mb-3">
-			<label asp-for="Price" class="form-label">Price</label>
-			<input type="text" asp-for="Price" class="form-control">
-			<span asp-validation-for="Price" class="text error"></span>
+			<label asp-for="Description" class="form-label fw-bold">Description</label>
+			<div>
+				<textarea asp-for="Description" class="w-100"></textarea>
+				<div class="error">
+					<span asp-validation-for="Description" class="text error"></span>
+				</div>
+			</div>
 		</div>
 		<div class="mb-3">
-			<label asp-for="Img" class="form-label">Image</label>
+			<label asp-for="Price" class="form-label fw-bold">Price</label>
+			<input type="text" asp-for="Price" class="form-control">
+			<div class="error">
+				<span asp-validation-for="Price" class="text error"></span>
+			</div>
+		</div>
+		<div class="mb-3">
+			<label asp-for="Img" class="form-label fw-bold">Image</label>
 			<input type="text" asp-for="Img" class="form-control">
-			<span asp-validation-for="Img" class="text error"></span>
+			<div class="error">
+				<span asp-validation-for="Img" class="text error"></span>
+			</div>
 		</div>
 		<button type="submit">Create</button>
 	</form>

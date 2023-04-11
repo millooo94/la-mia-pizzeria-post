@@ -1,0 +1,22 @@
+table {
+    border: 1px solid grey;
+    border-radius: 4px;
+    border-spacing: 0;
+}
+
+    table > tbody tr:nth-child(odd) {
+        background-color: lightgrey;
+    }
+
+    table :is(td, th) {
+        padding: 4px 8px;
+    }
+
+.post-link-image {
+    height: 80px
+}
+
+price {
+    font-weight: bold
+}
+
